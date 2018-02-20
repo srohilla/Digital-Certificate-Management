@@ -3,7 +3,7 @@
 How to run the Application :
 * Open Docker Quickstart terminal
 
-* Start the db by the command Make startDB
+* Start the db by the command Make startDb
 
 * Build the application by Make build
 
