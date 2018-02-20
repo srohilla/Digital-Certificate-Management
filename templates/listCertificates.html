@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <title>Digital Certificate Management</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+table, td, th {    
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+}
+
+.tablecontainer {
+   border-radius: 5px;
+    width: 500px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+.container {
+    border-radius: 5px;
+    width: 500px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
+    <script type="text/javascript">
+      
+$(document).ready(function(){
+$("#listCertificates").on("click",function(){
+  // event.preventDefault();
+   
+     $.get({
+       url:'/v1/customers/'+$('#customer_id').val()+'/certificates/Active',
+       success: function(result) {
+       dataset = result['certificates'];
+      // console.log(dataset);
+       for (var i = 0; i < dataset.length; i++) {
+         $('#myTable').append('<tr><td>'+dataset[i]["id"]+'</td><td>'+dataset[i]["state"]+'</td><td>'+dataset[i]["key"]+'</td><td>'+dataset[i]["certificate_body"]+'</td></tr>');
+          console.log(dataset[i]['id'])
+           }
+
+       }
+     }
+       );
+    
+
+    return false;
+
+});
+
+});
+    </script>
+  </head>
+  <body bgcolor=white>
+<HEADER class="w3-container w3-teal">
+  <a href="/" class="previous">&laquo; Previous</a>
+       <center><h3>Digital Certificate Management</h3></center>
+</HEADER>
+  <center><h3>List Certificates </h3></center>
+      <form>
+            <div class="container">
+      <div class="form-group">
+        <label for="customer_id">Customer id:</label>
+        <input type="text" class="form-control" id="customer_id" required>
+      </div>
+  <button type="submit" id = "listCertificates" class="btn btn-primary">Submit</button>
+</form>
+</div>
+<center>
+ <div class="tablecontainer" >
+<table id="myTable" class="display" width="100%">
+  
+  <tbody>
+    <tr><td>Certificate ID</td>
+    <td>State</td>
+    <td>Key</td>
+    <td>Certificate Body</td>
+    </tr>
+  </tbody>
+
+</table>
+</div>
+</center>
+  </body>
+</html>

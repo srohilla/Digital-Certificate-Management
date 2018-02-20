@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <title>Digital Certificate Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    border-radius: 5px;
+    width: 500px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
+    <script type="text/javascript">
+      
+$(document).ready(function(){
+
+$("#addCustomer").on('click', function(event){
+    event.preventDefault();
+     $.post({
+       url:'/v1/customers',
+       data : JSON.stringify({
+          "name" : $("#name").val(),
+          "email":$("#email").val(),
+          "password":$("#pwd").val()
+       }),
+       success: function(result) {
+        $("#message").text("Created Succesfully ! Customer ID is : "+result["id"])
+        console.log(result);
+       },
+       error: function(error){
+        $("#message").text(error["responseJSON"]["message"])
+        console.log(error["responseJSON"]["message"]);
+
+       }
+     }
+       );
+    
+    
+
+    return false;
+
+});
+
+});
+    </script>
+  </head>
+  <body bgcolor=white>
+
+    <HEADER class="w3-container w3-teal">
+
+      <a href="/" class="previous">&laquo; Previous</a>
+       <center><h3>Digital Certificate Management</h3></center>
+</HEADER>
+      <center><h3>CREATE CUSTOMER FORM</h3></center>
+     
+
+    <div class="container">
+    <form id="form">
+      <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" id="name" required>
+  </div>
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" id="email" required>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" required>
+  </div>
+  <button type="submit" id = "addCustomer" class="btn btn-primary">Submit</button>
+</form>
+</div>
+ 
+
+
+<center><span id = "message"></span></center>
+
+  </body>
+</html>

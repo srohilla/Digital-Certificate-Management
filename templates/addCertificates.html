@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <title>Digital Certificate Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="text/javascript">
+      
+$(document).ready(function(){
+$("#addCertificate").on("click",function(){
+  // event.preventDefault();
+    
+     $.post({
+       url:'/v1/customers/certificates',
+       data : JSON.stringify({
+          "customer_id":$("#customer_id").val(),
+          "key":$("#key").val(),
+          "state":$("#state").val(),
+          "certificate_body":$("#certificate_body").val()
+       }),
+       success: function(result) {
+          $("#message").text(result["message"]);
+       
+       },
+       error: function(error){
+        $("#message").text(error["responseJSON"]["message"]);
+
+       }
+     }
+       );
+
+    return false;
+
+});
+
+});
+    </script>
+    <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    border-radius: 5px;
+    width: 500px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
+  </head>
+  <body bgcolor=white>
+
+    <HEADER class="w3-container w3-teal">
+      <a href="/" class="previous">&laquo; Previous</a>
+       <center><h3>Digital Certificate Management</h3></center>
+</HEADER>
+      <center><h3>Add Certificates</h3></center>
+  <div class="container"> 
+    
+    <form>
+      
+    <div class="form-group">
+    <label for="customer_id">Customer ID:</label>
+    <input type="id" class="form-control" id="customer_id" required>
+  </div>
+  <div class="form-group">
+    <label for="state">State : </label>
+    <input type="text" class="form-control" id="state" required>
+  </div>
+  <div class="form-group">
+    <label for="key">Key:</label>
+    <input type="password" class="form-control" id="key" required>
+  </div>
+  <div class="form-group">
+    <label for="certificate_body">Certificate body:</label>
+    ​<textarea id="certificate_body" class="form-control" rows="7" cols="70" required></textarea>
+    
+  </div>
+  <button type="submit" id = "addCertificate" class="btn btn-primary">Submit</button>
+</form>
+</div>
+<center><span id="message"></span></center>
+  </body>
+</html>

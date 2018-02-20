@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <title>Digital Certificate Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="text/javascript">
+      
+$(document).ready(function(){
+$("#deleteCustomer").on("click",function(){
+           // event.preventDefault();
+         $.ajax({
+       url:'/v1/customers/'+$("#customerid").val(),
+       type:"DELETE",
+       success: function(result) {
+        $("#message").text(result["message"]);
+
+       },
+       error: function(error){
+        $("#message").text(error["responseJSON"]["message"]);
+
+       }
+     }
+       );   
+
+    return false;
+
+});
+
+});
+    </script>
+     <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    border-radius: 5px;
+    width: 500px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
+  </head>
+  <body bgcolor=white>
+    <HEADER class="w3-container w3-teal">
+      <a href="/" class="previous">&laquo; Previous</a>
+       <center><h3>Digital Certificate Management</h3></center>
+</HEADER>
+   <center><h3>Delete Certificate </h3></center>
+    
+<div class="container">
+    <form id="form1" >
+      <div class="form-group">
+    <label for="customerid">Customer ID:</label>
+    <input type="text" class="form-control" id="customerid" required>
+  </div>
+  <button type="submit" id = "deleteCustomer" class="btn btn-primary">Submit</button>
+</form>
+
+</div>
+<center>
+<span id="message"></span></center>
+  </body>
+</html>
